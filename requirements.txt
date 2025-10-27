@@ -1,0 +1,35 @@
+Implement a webservice for managing a repository of users and their passwords. Data should be
+stored in sql database. Service should be secured with API key, client should submit valid API key
+with each request. Each client should get its own API key.
+ 
+Service must support:
+ Adding a new user
+ Updating user’s data
+ Deleting user
+ Retrieving user’s data
+ Validating user’s password
+ 
+Service should store at least the following information for each user
+ Id (Immutable, generated automatically)
+ UserName
+ FullName
+ E-mail
+ Mobile number
+ Language
+ Culture
+ Password
+ 
+Each API call should be logged to application log file. A new log file should be created for each day.
+Log messages should contain following information:
+ Log level (Info or Error)
+ Time
+ Client IP
+ Client name
+ Name of host on which service is running
+ Name of API method
+ Request parameters
+ Message
+ 
+Solution must be implemented in c#. Request and response messages of all APIs should be in json
+format. Solution must include instructions for running it in our environment and any scripts required
+to set up its database.
