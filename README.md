@@ -44,9 +44,9 @@ Run Entity Framework migrations to create the database:
 
 ```bash
 # Navigate to the root project directory
-cd UserManagementService
+cd user-management-service
 
-# Apply migrations
+# Apply migrations from the solution root
 dotnet ef database update   --project UserManagementService.Data   --startup-project UserManagementService.Api
 ```
 
@@ -69,7 +69,7 @@ When you run the application for the first time, **two API keys dev1 and dev2 ar
 dotnet run --project UserManagementService.Api
 ```
 
-The service will start at `https://localhost:7238` (or `http://localhost:5238`)
+The service will start at `https://localhost:7013` (or `http://localhost:5238`)
 
 ## Testing the Service
 
@@ -87,7 +87,7 @@ dotnet test --verbosity normal
 
 Once the service is running, open your browser and navigate to:
 ```
-https://localhost:7238/swagger 
+https://localhost:7013/swagger 
 or 
 https://localhost:5238/swagger 
 ```
