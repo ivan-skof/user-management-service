@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UserManagementService.Core.DTOs
+namespace UserManagementService.Core.DTOs;
+
+public class ValidatePasswordRequest
 {
-    public class ValidatePasswordRequest
-    {
-        [Required]
-        public string Password { get; set; } = string.Empty;
-    }
+    [Required]
+    public string Password { get; set; } = string.Empty;
 }

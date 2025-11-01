@@ -1,10 +1,9 @@
 using System.Security.Cryptography;
 
-namespace UserManagementService.Services.Interfaces
+namespace UserManagementService.Services.Interfaces;
+
+public interface IPasswordHasher
 {
-    public interface IPasswordHasher
-    {
-        (string hash, string salt) HashPassword(string password);
-        bool VerifyPassword(string password, string storedHash, string storedSalt);
-    }
+    (string hash, string salt) HashPassword(string password);
+    bool VerifyPassword(string password, string storedHash, string storedSalt);
 }

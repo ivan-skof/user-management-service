@@ -1,13 +1,12 @@
-namespace UserManagementService.Services.Exceptions
-{
-    public class UserNotFoundException : Exception
-    {
-        public UserNotFoundException() : base()
-        {
-        }
+namespace UserManagementService.Services.Exceptions;
 
-        public UserNotFoundException(string message) : base(message)
-        {
-        }
+public class UserNotFoundException : Exception
+{
+    public UserNotFoundException() : base()
+    {
+    }
+
+    public UserNotFoundException(string message) : base(message)
+    {
     }
 }

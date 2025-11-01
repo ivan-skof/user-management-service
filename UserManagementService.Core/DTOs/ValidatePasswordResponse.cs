@@ -1,7 +1,6 @@
-namespace UserManagementService.Core.DTOs
+namespace UserManagementService.Core.DTOs;
+
+public class ValidatePasswordResponse
 {
-    public class ValidatePasswordResponse
-    {
-        public bool IsValid { get; set; }
-    }
+    public bool IsValid { get; set; }
 }
