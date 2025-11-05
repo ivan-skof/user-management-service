@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Serilog.Context;
 using UserManagementService.Data.Context;
 
 namespace UserManagementService.Api.Middleware;
@@ -44,9 +45,12 @@ public class ApiKeyAuthMiddleware
         }
 
         // Store client information in HttpContext for logging
-        context.Items["ClientName"] = apiClient.ClientName;
         context.Items["ClientId"] = apiClient.Id;
 
-        await _next(context);
+        using (LogContext.PushProperty("ClientName", apiClient.ClientName))
+        using (LogContext.PushProperty("ClientIp", context.Connection.RemoteIpAddress))
+        {
+            await _next(context);
+        }
     }
 }

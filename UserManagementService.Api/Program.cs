@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using UserManagementService.Api.Logging;
 using UserManagementService.Api.Middleware;
+using UserManagementService.Core.DTOs;
 using UserManagementService.Data.Context;
 using UserManagementService.Data.Entities;
 using UserManagementService.Services.Implementations;
@@ -10,6 +12,7 @@ using UserManagementService.Services.Interfaces;
 Log.Logger = new LoggerConfiguration()
     .Enrich.WithMachineName()
     .Enrich.FromLogContext()
+    .DestructureSensitiveDtos()
     .MinimumLevel.Information()
     // Console: log everything
     .WriteTo.Console()
@@ -19,7 +22,7 @@ Log.Logger = new LoggerConfiguration()
         .WriteTo.File(
             path: "Logs/serilog_.txt",
             rollingInterval: RollingInterval.Day,
-            outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} {Level} Host={MachineName}] {Message}{NewLine}{Exception}"
+            outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} Level={Level} Host={MachineName} ClientIp={ClientIp} ClientName={ClientName} MethodName={MethodName} Parameters={Parameters} BodyParameters={BodyParameters}] {Message}{NewLine}{Exception}"
         ))
     .CreateLogger();
 
@@ -29,7 +32,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog();
 
 // Add services to the container
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<LogEnrichmentActionFilter>();
+});
 builder.Services.AddEndpointsApiExplorer();
 
 
