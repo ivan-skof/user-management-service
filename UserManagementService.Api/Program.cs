@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using UserManagementService.Api.ExceptionHandlers;
 using UserManagementService.Api.Logging;
 using UserManagementService.Api.Middleware;
 using UserManagementService.Core.DTOs;
@@ -22,7 +23,7 @@ Log.Logger = new LoggerConfiguration()
         .WriteTo.File(
             path: "Logs/serilog_.txt",
             rollingInterval: RollingInterval.Day,
-            outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} Level={Level} Host={MachineName} ClientIp={ClientIp} ClientName={ClientName} MethodName={MethodName} Parameters={Parameters} BodyParameters={BodyParameters}] {Message}{NewLine}{Exception}"
+            outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff} Level={Level} Host={MachineName} ClientIp={ClientIp} ClientName={ClientName} MethodName={MethodName}] {Message}{NewLine}{Exception}"
         ))
     .CreateLogger();
 
@@ -83,8 +84,10 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddSingleton<IPasswordHasher, PasswordHasher>();
-
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 var app = builder.Build();
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -96,6 +99,7 @@ app.UseHttpsRedirection();
 
 // Custom middleware for API key authentication
 app.UseMiddleware<ApiKeyAuthMiddleware>();
+app.UseExceptionHandler();
 
 app.UseAuthorization();
 
