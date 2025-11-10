@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -35,8 +36,10 @@ builder.Host.UseSerilog();
 // Add services to the container
 builder.Services.AddControllers(options =>
 {
+    options.Filters.Add(new ProducesAttribute("application/json"));
     options.Filters.Add<LogEnrichmentActionFilter>();
 });
+
 builder.Services.AddEndpointsApiExplorer();
 
 

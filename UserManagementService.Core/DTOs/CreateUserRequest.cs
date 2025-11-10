@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using UserManagementService.Core.Validation;
 
 namespace UserManagementService.Core.DTOs;
 
@@ -31,5 +32,6 @@ public class CreateUserRequest
 
     [Required]
     [MinLength(8)]
+    [PasswordComplexity]
     public string Password { get; set; } = string.Empty;
 }
